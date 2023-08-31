@@ -15,3 +15,15 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+#root {
+  min-height: 100vh;
+}
+
+.wrapper {
+  min-height: 100vh;
+}
+.login-wrapper {
+  display: flex;
+  background-color: antiquewhite;
+}

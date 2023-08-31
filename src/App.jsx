@@ -56,7 +56,8 @@ const App = () => {
       <AuthRequiredModal
         {...{ authRequiredModalOpen, setAuthRequiredModalOpen, triggerLogin }}
       />
-      <Container text style={{ marginTop: '7em' }}>
+      <div className='wrapper'>
+      <Container>
         <Switch>
           <Route path="/" exact component={Home} />
           <Route
@@ -75,6 +76,7 @@ const App = () => {
           <SecureRoute path="/profile" component={Profile} />
         </Switch>
       </Container>
+      </div>
     </Security>
   );
 };
