@@ -3,12 +3,14 @@ import { useOktaAuth } from '@okta/okta-react';
 import OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 import logo from './humber.svg';
+import { Route, useHistory, Switch } from 'react-router-dom';
 
 import config from './config';
 
 const Login = ({ setCorsErrorModalOpen }) => {
   const { oktaAuth } = useOktaAuth();
   const widgetRef = useRef();
+  const history = useHistory();
 
   // Fetch otp and state from query params from email callback verification URI
   // Application should have http://localhost:8080/login as the email callback verification URI
@@ -51,7 +53,10 @@ const Login = ({ setCorsErrorModalOpen }) => {
     widget.renderEl(
       { el: widgetRef.current },
       (res) => {
+        console.log("HANDLE REDIRECT ??????", res)
+        // res.status - SUCCESS
         oktaAuth.handleLoginRedirect(res.tokens);
+        history.push('/terms');
       },
       (err) => {
         throw err;

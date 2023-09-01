@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, useHistory, Switch } from 'react-router-dom';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
+
 import { Container } from 'semantic-ui-react';
 import config from './config';
 import Home from './Home';
@@ -11,6 +12,7 @@ import Navbar from './Navbar';
 import Profile from './Profile';
 import CorsErrorModal from './CorsErrorModal';
 import AuthRequiredModal from './AuthRequiredModal';
+import Terms from './Terms';
 
 const oktaAuth = new OktaAuth(config.oidc);
 
@@ -19,10 +21,10 @@ const App = () => {
   const [authRequiredModalOpen, setAuthRequiredModalOpen] =
     React.useState(false);
 
-  const history = useHistory(); // example from react-router
+  const history = useHistory();
 
   const triggerLogin = () => {
-    // Redirect to the /login page that has a CustomLoginComponent
+    console.log("TRIGGERED....!!!")
     history.push('/login');
   };
 
@@ -42,7 +44,8 @@ const App = () => {
   };
 
   const onAuthResume = async () => {
-    history.push('/login');
+    console.log("ON AUTH RESUME>>>>")
+    history.push('/terms');
   };
 
   return (
@@ -74,6 +77,7 @@ const App = () => {
           />
           <SecureRoute path="/messages" component={Messages} />
           <SecureRoute path="/profile" component={Profile} />
+          <SecureRoute path="/terms" component={Terms} />
         </Switch>
       </Container>
       </div>

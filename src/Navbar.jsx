@@ -23,10 +23,14 @@ const Navbar = ({ setCorsErrorModalOpen }) => {
   // Note: Can't distinguish CORS error from other network errors
   const isCorsError = (err) => (err.name === 'AuthApiError' && !err.errorCode && err.xhr.message === 'Failed to fetch');
 
-  const login = async () => history.push('/login');
+  const login = async () => {
+    console.log("Navigate to profile..")
+    history.push('/terms');
+  }
 
   const logout = async () => {
     const basename = window.location.origin + history.createHref({ pathname: '/' });
+    console.log("base name is", basename)
     try {
       await oktaAuth.signOut({ postLogoutRedirectUri: basename });
     } catch (err) {
@@ -60,6 +64,11 @@ const Navbar = ({ setCorsErrorModalOpen }) => {
           {authState.isAuthenticated && (
             <Menu.Item id="profile-button">
               <Link to="/profile">Profile</Link>
+            </Menu.Item>
+          )}
+          {authState.isAuthenticated && (
+            <Menu.Item id="profile-button">
+              <Link to="/terms">Terms</Link>
             </Menu.Item>
           )}
           {authState.isAuthenticated && (

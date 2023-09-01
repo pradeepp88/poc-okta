@@ -23,6 +23,7 @@ const Profile = () => {
       // When user isn't authenticated, forget any user info
       setUserInfo(null);
     } else {
+      
       oktaAuth.getUser().then((info) => {
         setUserInfo(info);
       }).catch((err) => {
@@ -38,6 +39,8 @@ const Profile = () => {
       </div>
     );
   }
+
+  
 
   return (
     <div>
