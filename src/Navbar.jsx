@@ -10,27 +10,31 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import { useOktaAuth } from '@okta/okta-react';
-import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
-import { Container, Icon, Image, Menu } from 'semantic-ui-react';
-import logo from './logo.svg';
+import { useOktaAuth } from "@okta/okta-react";
+import React from "react";
+import { useHistory, Link } from "react-router-dom";
+import { Container, Icon, Image, Menu } from "semantic-ui-react";
+import logo from "./logo.svg";
 
 const Navbar = ({ setCorsErrorModalOpen }) => {
   const history = useHistory();
   const { authState, oktaAuth } = useOktaAuth();
 
   // Note: Can't distinguish CORS error from other network errors
-  const isCorsError = (err) => (err.name === 'AuthApiError' && !err.errorCode && err.xhr.message === 'Failed to fetch');
+  const isCorsError = (err) =>
+    err.name === "AuthApiError" &&
+    !err.errorCode &&
+    err.xhr.message === "Failed to fetch";
 
   const login = async () => {
-    console.log("Navigate to profile..")
-    history.push('/terms');
-  }
+    console.log("Navigate to profile..");
+    history.push("/terms");
+  };
 
   const logout = async () => {
-    const basename = window.location.origin + history.createHref({ pathname: '/' });
-    console.log("base name is", basename)
+    const basename =
+      window.location.origin + history.createHref({ pathname: "/" });
+    console.log("base name is", basename);
     try {
       await oktaAuth.signOut({ postLogoutRedirectUri: basename });
     } catch (err) {
@@ -49,35 +53,24 @@ const Navbar = ({ setCorsErrorModalOpen }) => {
   return (
     <div>
       <Menu fixed="top" inverted>
-        <Container>
-          <Menu.Item header>
-            <Image size="mini" src={logo} />
-            &nbsp;
-            <Link to="/">Humber Okta Demo</Link>
-          </Menu.Item>
+        <Menu.Item header>
+          <Image size="mini" src={logo} />
+          &nbsp;
+          <Link to="/">Humber Okta Demo</Link>
+        </Menu.Item>
+
+        <Menu.Menu position="right">
+          <Menu.Menu position="right">
+            {!authState.isPending && !authState.isAuthenticated && (
+              <Menu.Item onClick={login}>Login</Menu.Item>
+            )}
+          </Menu.Menu>
           {authState.isAuthenticated && (
-          <Menu.Item id="messages-button">
-            <Icon name="mail outline" />
-            <Link to="/messages">Messages</Link>
-          </Menu.Item>
-          )}
-          {authState.isAuthenticated && (
-            <Menu.Item id="profile-button">
-              <Link to="/profile">Profile</Link>
+            <Menu.Item id="logout-button" onClick={logout}>
+              Logout
             </Menu.Item>
           )}
-          {authState.isAuthenticated && (
-            <Menu.Item id="profile-button">
-              <Link to="/terms">Terms</Link>
-            </Menu.Item>
-          )}
-          {authState.isAuthenticated && (
-            <Menu.Item id="logout-button" onClick={logout}>Logout</Menu.Item>
-          )}
-          {!authState.isPending && !authState.isAuthenticated && (
-            <Menu.Item onClick={login}>Login</Menu.Item>
-          )}
-        </Container>
+        </Menu.Menu>
       </Menu>
     </div>
   );
