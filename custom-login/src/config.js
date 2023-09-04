@@ -17,7 +17,7 @@ const OKTA_TESTING_DISABLEHTTPSCHECK =
   process.env.OKTA_TESTING_DISABLEHTTPSCHECK || false;
 const BASENAME = import.meta.env.BASE_URL || "";
 // BASENAME includes trailing slash
-const REDIRECT_URI = `${window.location.origin}${BASENAME}login/callback`;
+const REDIRECT_URI = `https://humber-poc-custom-login-1718b1781359.herokuapp.com/custom-login/login/callback`;
 const USE_INTERACTION_CODE =
   process.env.USE_INTERACTION_CODE === "true" || false;
 
