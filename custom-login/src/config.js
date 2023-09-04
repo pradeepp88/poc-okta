@@ -21,6 +21,7 @@ const REDIRECT_URI = `https://humber-poc-custom-login-1718b1781359.herokuapp.com
 const USE_INTERACTION_CODE =
   process.env.USE_INTERACTION_CODE === "true" || false;
 
+// Adding a comment
 export default {
   oidc: {
     clientId: CLIENT_ID,
